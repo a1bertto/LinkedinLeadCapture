@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LinkedIn Scraper Submission</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 12px;
+      margin: 20px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px 30px;
+      background-color: #0073b1;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #005582;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Submit LinkedIn Profile</h1>
+
+  <input type="text" id="linkedinUrl" placeholder="Paste LinkedIn Profile URL here">
+  <br>
+  <button onclick="submitLinkedIn()">Submit</button>
+
+  <div class="message" id="message"></div>
+
+  <script>
+    function submitLinkedIn() {
+      const url = document.getElementById('linkedinUrl').value;
+      if (!url) {
+        alert('Please paste a LinkedIn profile URL.');
+        return;
+      }
+
+      fetch('YOUR_MAKE_WEBHOOK_URL', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ linkedin_url: url })
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById('message').innerText = "Submitted successfully!";
+          document.getElementById('linkedinUrl').value = "";
+        } else {
+          document.getElementById('message').innerText = "Submission failed.";
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = "An error occurred.";
+      });
+    }
+  </script>
+
+</body>
+</html>
